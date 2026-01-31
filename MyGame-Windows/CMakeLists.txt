@@ -15,6 +15,7 @@ add_executable(MyGame
     ../src/FPSCounter.cpp
     ../src/PerformanceMonitor.cpp
     ../src/Character1.cpp
+    ../src/Input.cpp
 )
 
 target_link_libraries(MyGame PRIVATE

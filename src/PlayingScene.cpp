@@ -1,5 +1,6 @@
 #include "PlayingScene.h"
 #include "GameOverScene.h"
+#include "Input.h"
 
 void PlayingScene::onEnter() {
     SDL_Log("PlayingScene: Enter (Level %d)", level);
@@ -10,46 +11,7 @@ void PlayingScene::onExit() {
 }
 
 void PlayingScene::handleEvent(const SDL_Event& event) {
-
-
-
-    if (event.type == SDL_EVENT_KEY_DOWN) {
-        // ESC or Android back button = win
-        if (event.key.scancode == SDL_SCANCODE_ESCAPE ||
-            event.key.scancode == SDL_SCANCODE_AC_BACK) {
-            requestReplace<GameOverScene>(true);  // win
-        }
-        // Space = lose
-        if (event.key.scancode == SDL_SCANCODE_SPACE) {
-            requestReplace<GameOverScene>(false); // lose
-        }
-    }
-
-    if (event.type == SDL_EVENT_KEY_DOWN) {
-        // ESC or Android back button = win
-        if (event.key.scancode == SDL_SCANCODE_ESCAPE ||
-            event.key.scancode == SDL_SCANCODE_AC_BACK) {
-            requestReplace<GameOverScene>(true);  // win
-        }
-        // Space = lose
-        if (event.key.scancode == SDL_SCANCODE_SPACE) {
-            requestReplace<GameOverScene>(false); // lose
-        }
-
-        if (event.key.scancode == SDL_SCANCODE_UP) {
-            // move up
-        }
-        if (event.key.scancode == SDL_SCANCODE_DOWN) {
-            // move down
-        }
-        if (event.key.scancode == SDL_SCANCODE_LEFT) {
-            // move left
-        }
-        if (event.key.scancode == SDL_SCANCODE_RIGHT) {
-            // move right
-        }
-    }
-    // Touch: left half = lose, right half = win
+    // Touch/mouse: left half = lose, right half = win (for testing)
     if (event.type == SDL_EVENT_FINGER_DOWN) {
         if (event.tfinger.x < 0.5f) {
             requestReplace<GameOverScene>(false); // lose
@@ -57,7 +19,6 @@ void PlayingScene::handleEvent(const SDL_Event& event) {
             requestReplace<GameOverScene>(true);  // win
         }
     }
-    // Mouse click: left half = lose, right half = win
     if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
         SDL_Window* window = SDL_GetWindowFromEvent(&event);
         if (window) {
@@ -73,13 +34,20 @@ void PlayingScene::handleEvent(const SDL_Event& event) {
 }
 
 void PlayingScene::update(float deltaTime) {
-    // Handle movement input
-    const bool* keys = SDL_GetKeyboardState(NULL);
+    Input& input = Input::instance();
+
+    // Check for back/escape (win for testing)
+    if (input.justPressed(Action::Back)) {
+        requestReplace<GameOverScene>(true);
+        return;
+    }
+
+    // Handle movement using Input manager
     float dx = 0.0f, dy = 0.0f;
-    if (keys[SDL_SCANCODE_UP]) dy -= speed * deltaTime;
-    if (keys[SDL_SCANCODE_DOWN]) dy += speed * deltaTime;
-    if (keys[SDL_SCANCODE_LEFT]) dx -= speed * deltaTime;
-    if (keys[SDL_SCANCODE_RIGHT]) dx += speed * deltaTime;
+    if (input.isHeld(Action::MoveUp)) dy -= speed * deltaTime;
+    if (input.isHeld(Action::MoveDown)) dy += speed * deltaTime;
+    if (input.isHeld(Action::MoveLeft)) dx -= speed * deltaTime;
+    if (input.isHeld(Action::MoveRight)) dx += speed * deltaTime;
     player.move(dx, dy);
 
     // Keep player within screen bounds

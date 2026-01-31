@@ -19,6 +19,7 @@ add_library(main SHARED
     ../../../../src/FPSCounter.cpp
     ../../../../src/PerformanceMonitor.cpp
     ../../../../src/Character1.cpp
+    ../../../../src/Input.cpp
 )
 
 target_link_libraries(main PRIVATE SDL3::SDL3 SDL3_image::SDL3_image)

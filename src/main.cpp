@@ -6,6 +6,7 @@
 #include "IntroScene.h"
 #include "FPSCounter.h"
 #include "PerformanceMonitor.h"
+#include "Input.h"
 
 int main(int argc, char* argv[]) {
     SDL_Log("Starting game...");
@@ -59,11 +60,13 @@ int main(int argc, char* argv[]) {
         if (deltaTime > 0.1f) deltaTime = 0.1f;
 
         // Handle events
+        Input::instance().beginFrame();
         SDL_Event event;
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_EVENT_QUIT) {
                 running = false;
             }
+            Input::instance().processEvent(event);
             scenes.handleEvent(event);
         }
 
