@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(echo:*)",
+      "Bash(test:*)",
+      "Bash(java -version)",
+      "Bash(dir:*)",
+      "Bash(powershell:*)",
+      "Bash(cmd //c \"mklink /J \"\"C:\\\\Users\\\\johnw\\\\Documents\\\\github_projects\\\\game1\\\\MyGame-Android\\\\app\\\\jni\\\\SDL\"\" \"\"C:\\\\SDL2\"\"\")",
+      "Bash(cmd /c mklink /J \"C:\\\\Users\\\\johnw\\\\Documents\\\\github_projects\\\\game1\\\\MyGame-Android\\\\app\\\\jni\\\\SDL\" \"C:\\\\SDL2\")",
+      "Bash(cmake:*)",
+      "Bash(git clone:*)",
+      "Bash(python3 -c:*)",
+      "Bash(./MyGame.exe)"
+    ]
+  }
+}

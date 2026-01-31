@@ -1,0 +1,27 @@
+# Build outputs
+MyGame-Windows/build/
+MyGame-Android/build/
+MyGame-Android/app/build/
+MyGame-Android/app/.cxx/
+MyGame-Android/.gradle/
+
+# IDE
+.vs/
+.vscode/
+*.user
+*.suo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Compiled
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.apk
+
+# Local config
+local.properties
