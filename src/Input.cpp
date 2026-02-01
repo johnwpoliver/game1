@@ -16,8 +16,11 @@ Input::Input() {
     bindKey(SDL_SCANCODE_AC_BACK, Action::Back);  // Android back button
     bindKey(SDL_SCANCODE_P, Action::Pause);
 
+    // Jump uses same keys as Confirm + Up arrow
+    // (can't bind same key to multiple actions, so we'll check both in game code)
+
     // Initialize all actions to not pressed
-    for (int i = 0; i <= static_cast<int>(Action::Pause); i++) {
+    for (int i = 0; i <= static_cast<int>(Action::Jump); i++) {
         Action action = static_cast<Action>(i);
         currentState[action] = false;
         previousState[action] = false;
@@ -49,6 +52,12 @@ void Input::processEvent(const SDL_Event& event) {
             setActionState(it->second, true);
             if (it->second == Action::Confirm) {
                 confirmInputThisFrame = true;
+                // Jump triggers on same keys as Confirm
+                setActionState(Action::Jump, true);
+            }
+            // Up arrow also triggers Jump
+            if (it->second == Action::MoveUp) {
+                setActionState(Action::Jump, true);
             }
         }
     }
@@ -56,11 +65,19 @@ void Input::processEvent(const SDL_Event& event) {
         auto it = keyBindings.find(event.key.scancode);
         if (it != keyBindings.end()) {
             setActionState(it->second, false);
+            if (it->second == Action::Confirm || it->second == Action::MoveUp) {
+                setActionState(Action::Jump, false);
+            }
         }
     }
     else if (event.type == SDL_EVENT_FINGER_DOWN ||
              event.type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
         confirmInputThisFrame = true;
+        setActionState(Action::Jump, true);
+    }
+    else if (event.type == SDL_EVENT_FINGER_UP ||
+             event.type == SDL_EVENT_MOUSE_BUTTON_UP) {
+        setActionState(Action::Jump, false);
     }
 }
 

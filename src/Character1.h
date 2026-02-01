@@ -15,6 +15,13 @@ public:
     void setBreathOffset(float offset);  // Start breathing at different phase
     void clampToScreen(float screenWidth, float screenHeight);
 
+    // Physics
+    void applyGravity(float deltaTime);
+    void jump();
+    void landOn(float groundY);
+    bool isGrounded() const { return grounded; }
+    float getVelocityY() const { return velocityY; }
+
     float getX() const { return bottomCenterX; }
     float getY() const { return bottomY; }
 
@@ -28,4 +35,10 @@ private:
 
     // Color
     Uint8 r, g, b;
+
+    // Physics
+    float velocityY = 0.0f;
+    float gravity = 1500.0f;       // Pixels per second squared
+    float jumpVelocity = -600.0f;  // Negative = upward
+    bool grounded = false;
 };

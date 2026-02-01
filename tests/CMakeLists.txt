@@ -7,6 +7,7 @@ enable_testing()
 
 find_package(GTest CONFIG REQUIRED)
 find_package(SDL3 CONFIG REQUIRED)
+find_package(nlohmann_json CONFIG REQUIRED)
 
 # Test executable
 add_executable(MyGameTests
@@ -16,6 +17,7 @@ add_executable(MyGameTests
     test_playingscene.cpp
     test_lives.cpp
     test_score.cpp
+    test_level.cpp
     ../src/Character1.cpp
     ../src/DisplayManager.cpp
     ../src/Input.cpp
@@ -25,6 +27,7 @@ add_executable(MyGameTests
     ../src/LevelIntroScene.cpp
     ../src/Lives.cpp
     ../src/Score.cpp
+    ../src/Level.cpp
 )
 
 target_include_directories(MyGameTests PRIVATE ../src)
@@ -33,6 +36,7 @@ target_link_libraries(MyGameTests PRIVATE
     GTest::gtest
     GTest::gtest_main
     SDL3::SDL3
+    nlohmann_json::nlohmann_json
 )
 
 include(GoogleTest)

@@ -80,3 +80,25 @@ void Character1::clampToScreen(float screenWidth, float screenHeight) {
         bottomY = screenHeight;
     }
 }
+
+void Character1::applyGravity(float deltaTime) {
+    velocityY += gravity * deltaTime;
+    bottomY += velocityY * deltaTime;
+}
+
+void Character1::jump() {
+    if (grounded) {
+        velocityY = jumpVelocity;
+        grounded = false;
+    }
+}
+
+void Character1::landOn(float groundY) {
+    if (bottomY >= groundY) {
+        bottomY = groundY;
+        velocityY = 0.0f;
+        grounded = true;
+    } else {
+        grounded = false;
+    }
+}

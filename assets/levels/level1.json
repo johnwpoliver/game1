@@ -1,0 +1,32 @@
+{
+  "name": "Level 1 - Getting Started",
+  "length": 3000,
+  "groundY": 500,
+  "ground": [
+    {"start": 0, "end": 600},
+    {"start": 700, "end": 1200},
+    {"start": 1400, "end": 2000},
+    {"start": 2200, "end": 3100}
+  ],
+  "platforms": [
+    {"x": 400, "y": 420, "width": 120, "height": 20},
+    {"x": 850, "y": 380, "width": 150, "height": 20},
+    {"x": 1100, "y": 350, "width": 100, "height": 20},
+    {"x": 1550, "y": 400, "width": 130, "height": 20},
+    {"x": 2050, "y": 380, "width": 100, "height": 20}
+  ],
+  "treasures": [
+    {"x": 460, "y": 390, "points": 50},
+    {"x": 925, "y": 350, "points": 100},
+    {"x": 1150, "y": 320, "points": 100},
+    {"x": 1615, "y": 370, "points": 50},
+    {"x": 2100, "y": 350, "points": 150},
+    {"x": 2800, "y": 470, "points": 200}
+  ],
+  "obstacles": [
+    {"x": 550, "y": 460, "width": 30, "height": 40},
+    {"x": 1000, "y": 460, "width": 30, "height": 40},
+    {"x": 1700, "y": 460, "width": 30, "height": 40},
+    {"x": 2500, "y": 460, "width": 40, "height": 40}
+  ]
+}

@@ -114,3 +114,97 @@ TEST_F(ClampToScreenTest, CustomSizeAffectsClamping) {
     character->clampToScreen(screenWidth, screenHeight);
     EXPECT_NEAR(character->getX(), 60.0f, 0.1f);
 }
+
+// Physics tests
+class PhysicsTest : public ::testing::Test {
+protected:
+    void SetUp() override {
+        character = new Character1(100.0f, 500.0f);
+    }
+
+    void TearDown() override {
+        delete character;
+    }
+
+    Character1* character;
+    const float groundY = 500.0f;
+};
+
+TEST_F(PhysicsTest, StartsNotGrounded) {
+    // By default, character is not grounded until landOn is called
+    EXPECT_FALSE(character->isGrounded());
+}
+
+TEST_F(PhysicsTest, LandOnSetsGrounded) {
+    character->landOn(groundY);
+    EXPECT_TRUE(character->isGrounded());
+}
+
+TEST_F(PhysicsTest, LandOnClampsToGround) {
+    character->setPosition(100.0f, 550.0f);  // Below ground
+    character->landOn(groundY);
+    EXPECT_FLOAT_EQ(character->getY(), groundY);
+}
+
+TEST_F(PhysicsTest, LandOnResetsVelocity) {
+    // Simulate falling
+    character->applyGravity(0.1f);  // Gain some downward velocity
+    EXPECT_GT(character->getVelocityY(), 0.0f);
+
+    character->setPosition(100.0f, 500.0f);
+    character->landOn(groundY);
+    EXPECT_FLOAT_EQ(character->getVelocityY(), 0.0f);
+}
+
+TEST_F(PhysicsTest, JumpWhenGrounded) {
+    character->landOn(groundY);
+    EXPECT_TRUE(character->isGrounded());
+
+    character->jump();
+    EXPECT_FALSE(character->isGrounded());
+    EXPECT_LT(character->getVelocityY(), 0.0f);  // Negative = upward
+}
+
+TEST_F(PhysicsTest, CannotJumpWhenNotGrounded) {
+    EXPECT_FALSE(character->isGrounded());
+    float initialVelocity = character->getVelocityY();
+
+    character->jump();  // Should do nothing
+    EXPECT_FLOAT_EQ(character->getVelocityY(), initialVelocity);
+}
+
+TEST_F(PhysicsTest, GravityIncreasesVelocity) {
+    float initialVelocity = character->getVelocityY();
+    character->applyGravity(0.1f);
+    EXPECT_GT(character->getVelocityY(), initialVelocity);
+}
+
+TEST_F(PhysicsTest, GravityMovesCharacterDown) {
+    character->setPosition(100.0f, 300.0f);
+    float initialY = character->getY();
+
+    character->applyGravity(0.1f);
+    EXPECT_GT(character->getY(), initialY);  // Y increases = moves down
+}
+
+TEST_F(PhysicsTest, JumpThenFall) {
+    character->landOn(groundY);
+    character->jump();
+
+    float jumpVelocity = character->getVelocityY();
+    EXPECT_LT(jumpVelocity, 0.0f);  // Going up
+
+    // Simulate time passing - gravity slows then reverses
+    for (int i = 0; i < 100; i++) {
+        character->applyGravity(0.016f);
+    }
+
+    // After enough time, should be falling (positive velocity)
+    EXPECT_GT(character->getVelocityY(), 0.0f);
+}
+
+TEST_F(PhysicsTest, AboveGroundNotGrounded) {
+    character->setPosition(100.0f, 400.0f);  // Above ground
+    character->landOn(groundY);
+    EXPECT_FALSE(character->isGrounded());
+}

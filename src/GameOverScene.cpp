@@ -98,33 +98,67 @@ void GameOverScene::render(SDL_Renderer* renderer) {
         blocks[i].render(renderer);
     }
 
-    // Draw main text
+    // Draw main text (at actual y ~80)
     SDL_SetRenderScale(renderer, 4.0f, 4.0f);
     if (playerWon) {
         SDL_SetRenderDrawColor(renderer, 255, 215, 0, 255);  // Gold
-        SDL_RenderDebugText(renderer, 50, 25, "YOU WIN!");
+        SDL_RenderDebugText(renderer, 50, 20, "YOU WIN!");
     } else {
         SDL_SetRenderDrawColor(renderer, 255, 100, 100, 255);  // Light red
-        SDL_RenderDebugText(renderer, 40, 25, "GAME OVER");
+        SDL_RenderDebugText(renderer, 40, 20, "GAME OVER");
     }
     SDL_SetRenderScale(renderer, 1.0f, 1.0f);
 
-    // Draw subtitle
-    SDL_SetRenderScale(renderer, 2.0f, 2.0f);
+    // Draw scores (at actual y ~180 and ~230)
+    char scoreText[64];
+    const float scoreScale = 2.0f;
+    SDL_SetRenderScale(renderer, scoreScale, scoreScale);
+
+    // Current score
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    snprintf(scoreText, sizeof(scoreText), "SCORE: %d", finalScore);
+    float scoreWidth = strlen(scoreText) * 8.0f;
+    float scoreX = (DisplayManager::DESIGN_WIDTH / scoreScale - scoreWidth) / 2.0f;
+    SDL_RenderDebugText(renderer, scoreX, 90, scoreText);  // actual y = 180
+
+    // High score (highlighted if new)
+    bool isNewHighScore = (finalScore >= highScore && finalScore > 0);
+    if (isNewHighScore) {
+        SDL_SetRenderDrawColor(renderer, 255, 215, 0, 255);  // Gold for new high score
+        snprintf(scoreText, sizeof(scoreText), "NEW HIGH SCORE!");
+    } else {
+        SDL_SetRenderDrawColor(renderer, 180, 180, 180, 255);
+        snprintf(scoreText, sizeof(scoreText), "HIGH SCORE: %d", highScore);
+    }
+    float highScoreWidth = strlen(scoreText) * 8.0f;
+    float highScoreX = (DisplayManager::DESIGN_WIDTH / scoreScale - highScoreWidth) / 2.0f;
+    SDL_RenderDebugText(renderer, highScoreX, 115, scoreText);  // actual y = 230
+
+    SDL_SetRenderScale(renderer, 1.0f, 1.0f);
+
+    // Draw subtitle (at actual y ~310)
+    const float subtitleScale = 1.5f;
+    SDL_SetRenderScale(renderer, subtitleScale, subtitleScale);
     SDL_SetRenderDrawColor(renderer, 200, 200, 200, 255);
     if (playerWon) {
-        SDL_RenderDebugText(renderer, 130, 80, "Congratulations!");
+        float subtitleWidth = 16 * 8.0f;  // "Congratulations!" is 16 chars
+        float subtitleX = (DisplayManager::DESIGN_WIDTH / subtitleScale - subtitleWidth) / 2.0f;
+        SDL_RenderDebugText(renderer, subtitleX, 207, "Congratulations!");
     } else {
-        SDL_RenderDebugText(renderer, 140, 80, "Better luck next time");
+        float subtitleWidth = 21 * 8.0f;  // "Better luck next time" is 21 chars
+        float subtitleX = (DisplayManager::DESIGN_WIDTH / subtitleScale - subtitleWidth) / 2.0f;
+        SDL_RenderDebugText(renderer, subtitleX, 207, "Better luck next time");
     }
     SDL_SetRenderScale(renderer, 1.0f, 1.0f);
 
-    // Draw "Press any key" with blinking effect
+    // Draw "Press any key" with blinking effect (at actual y ~500)
     int blink = (int)(timer * 2) % 2;
     if (blink == 0) {
         SDL_SetRenderScale(renderer, 2.0f, 2.0f);
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-        SDL_RenderDebugText(renderer, 130, 250, "Press any key");
+        float pressWidth = 13 * 8.0f;  // "Press any key" is 13 chars
+        float pressX = (DisplayManager::DESIGN_WIDTH / 2.0f - pressWidth) / 2.0f;
+        SDL_RenderDebugText(renderer, pressX, 250, "Press any key");
         SDL_SetRenderScale(renderer, 1.0f, 1.0f);
     }
 }

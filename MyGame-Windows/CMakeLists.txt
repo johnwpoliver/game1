@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 find_package(SDL3 CONFIG REQUIRED)
 find_package(SDL3_image CONFIG REQUIRED)
+find_package(nlohmann_json CONFIG REQUIRED)
 
 add_executable(MyGame
     ../src/main.cpp
@@ -19,9 +20,11 @@ add_executable(MyGame
     ../src/DisplayManager.cpp
     ../src/Lives.cpp
     ../src/Score.cpp
+    ../src/Level.cpp
 )
 
 target_link_libraries(MyGame PRIVATE
     SDL3::SDL3
     $<IF:$<TARGET_EXISTS:SDL3_image::SDL3_image-shared>,SDL3_image::SDL3_image-shared,SDL3_image::SDL3_image-static>
+    nlohmann_json::nlohmann_json
 )

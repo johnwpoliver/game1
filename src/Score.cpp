@@ -1,6 +1,7 @@
 #include "Score.h"
 #include <cstdio>
 #include <algorithm>
+#include <fstream>
 
 void Score::add(int points) {
     value += points;
@@ -11,6 +12,30 @@ void Score::add(int points) {
 
 void Score::reset() {
     value = 0;
+}
+
+void Score::loadHighScore(const std::string& filename) {
+    std::ifstream file(filename, std::ios::binary);
+    if (file.is_open()) {
+        file.read(reinterpret_cast<char*>(&highScore), sizeof(highScore));
+        if (!file) {
+            highScore = 0;
+        }
+        SDL_Log("Score: Loaded high score: %d", highScore);
+    } else {
+        highScore = 0;
+        SDL_Log("Score: No high score file found, starting fresh");
+    }
+}
+
+void Score::saveHighScore(const std::string& filename) {
+    std::ofstream file(filename, std::ios::binary);
+    if (file.is_open()) {
+        file.write(reinterpret_cast<const char*>(&highScore), sizeof(highScore));
+        SDL_Log("Score: Saved high score: %d", highScore);
+    } else {
+        SDL_Log("Score: Failed to save high score");
+    }
 }
 
 void Score::render(SDL_Renderer* renderer) {

@@ -9,7 +9,8 @@ enum class Action {
     MoveRight,
     Confirm,      // Space, Enter, or tap
     Back,         // Escape, Android back
-    Pause
+    Pause,
+    Jump          // Space, Up, or tap - for platformer
 };
 
 class Input {

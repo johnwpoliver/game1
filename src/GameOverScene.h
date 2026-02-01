@@ -5,7 +5,8 @@
 
 class GameOverScene : public Scene {
 public:
-    explicit GameOverScene(bool won) : playerWon(won) {}
+    explicit GameOverScene(bool won, int finalScore = 0, int highScore = 0)
+        : playerWon(won), finalScore(finalScore), highScore(highScore) {}
 
     void onEnter() override;
     void handleEvent(const SDL_Event& event) override;
@@ -14,6 +15,8 @@ public:
 
 private:
     bool playerWon;
+    int finalScore;
+    int highScore;
     float timer = 0.0f;
 
     static constexpr int numBlocks = 20;

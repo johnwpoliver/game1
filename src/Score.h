@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL3/SDL.h>
+#include <string>
 
 class Score {
 public:
@@ -13,6 +14,9 @@ public:
 
     void setPosition(float x, float y) { posX = x; posY = y; }
     void setScale(float s) { scale = s; }
+
+    void loadHighScore(const std::string& filename = "highscore.dat");
+    void saveHighScore(const std::string& filename = "highscore.dat");
 
     void render(SDL_Renderer* renderer);
 
