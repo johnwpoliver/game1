@@ -1,6 +1,8 @@
 #pragma once
 #include "SceneManager.h"
 #include "Character1.h"
+#include "Lives.h"
+#include "Score.h"
 
 class PlayingScene : public Scene {
 public:
@@ -16,4 +18,7 @@ private:
     int level;
     Character1 player{100.0f, 100.0f};
     float speed = 750.0f;
+
+    Lives lives{3};
+    Score score;
 };

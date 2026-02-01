@@ -14,6 +14,8 @@ add_executable(MyGameTests
     test_displaymanager.cpp
     test_scenemanager.cpp
     test_playingscene.cpp
+    test_lives.cpp
+    test_score.cpp
     ../src/Character1.cpp
     ../src/DisplayManager.cpp
     ../src/Input.cpp
@@ -21,6 +23,8 @@ add_executable(MyGameTests
     ../src/GameOverScene.cpp
     ../src/IntroScene.cpp
     ../src/LevelIntroScene.cpp
+    ../src/Lives.cpp
+    ../src/Score.cpp
 )
 
 target_include_directories(MyGameTests PRIVATE ../src)

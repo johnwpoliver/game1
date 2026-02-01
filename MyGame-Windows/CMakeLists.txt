@@ -17,6 +17,8 @@ add_executable(MyGame
     ../src/Character1.cpp
     ../src/Input.cpp
     ../src/DisplayManager.cpp
+    ../src/Lives.cpp
+    ../src/Score.cpp
 )
 
 target_link_libraries(MyGame PRIVATE

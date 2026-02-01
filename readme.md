@@ -1,4 +1,10 @@
-# MyGame Build Instructions
+# MyGame
+
+A learning project built collaboratively with Claude AI, gradually assembling a simple cross-platform game. The focus is on building solid engine elements first (scene management, input handling, display scaling, etc.) with gameplay to follow later.
+
+The same shared source code compiles to both **Windows** and **Android** using **SDL3**.
+
+---
 
 ## Project Structure
 
@@ -6,8 +12,42 @@
 game1/
 ├── src/                      <- Shared game code
 ├── tests/                    <- Unit tests (Google Test)
+├── scripts/                  <- Build scripts
 ├── MyGame-Android/           <- Android build
 └── MyGame-Windows/           <- Windows build
+```
+
+---
+
+## Quick Start (Scripts)
+
+Build scripts are available in both `.bat` (Windows CMD) and `.sh` (Git Bash) formats.
+
+### Run Unit Tests
+
+```powershell
+scripts\test.bat
+```
+```bash
+./scripts/test.sh
+```
+
+### Build and Run Windows
+
+```powershell
+scripts\run-windows.bat
+```
+```bash
+./scripts/run-windows.sh
+```
+
+### Build, Install and Run Android
+
+```powershell
+scripts\run-android.bat
+```
+```bash
+./scripts/run-android.sh
 ```
 
 ---

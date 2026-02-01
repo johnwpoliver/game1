@@ -5,6 +5,10 @@
 
 void PlayingScene::onEnter() {
     SDL_Log("PlayingScene: Enter (Level %d)", level);
+
+    // Position UI elements
+    lives.setPosition(10.0f, 10.0f);
+    score.setPosition(DisplayManager::DESIGN_WIDTH - 10.0f, 10.0f);
 }
 
 void PlayingScene::onExit() {
@@ -63,4 +67,8 @@ void PlayingScene::render(SDL_Renderer* renderer) {
     SDL_RenderClear(renderer);
 
     player.render(renderer);
+
+    // Draw UI
+    lives.render(renderer);
+    score.render(renderer);
 }

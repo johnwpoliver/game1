@@ -17,7 +17,8 @@
       "Bash(vcpkg list:*)",
       "Bash(C:/vcpkg/vcpkg list:*)",
       "Bash(C:/vcpkg/vcpkg install gtest:x64-windows)",
-      "Bash(./MyGameTests.exe:*)"
+      "Bash(./MyGameTests.exe:*)",
+      "Bash(./build/Release/MyGameTests.exe:*)"
     ]
   }
 }
