@@ -1,5 +1,6 @@
 #include "GameOverScene.h"
 #include "IntroScene.h"
+#include "DisplayManager.h"
 #include <cstdlib>
 
 void GameOverScene::onEnter() {
@@ -15,7 +16,7 @@ void GameOverScene::onEnter() {
         if (playerWon) {
             // Win: blocks start at bottom, rise up
             float x = 50.0f + (i * 60.0f);
-            blocks[i].setPosition(x, 650.0f);  // Start below screen
+            blocks[i].setPosition(x, DisplayManager::DESIGN_HEIGHT + 50.0f);  // Start below screen
             velocityX[i] = ((i % 3) - 1) * 30.0f;  // Slight horizontal drift
             velocityY[i] = -150.0f - (i * 20.0f);  // Rise up at different speeds
 
@@ -77,8 +78,9 @@ void GameOverScene::update(float deltaTime) {
 
         // Wrap horizontally
         float x = blocks[i].getX();
-        if (x < -50.0f) blocks[i].setPosition(850.0f, blocks[i].getY());
-        if (x > 850.0f) blocks[i].setPosition(-50.0f, blocks[i].getY());
+        const float margin = 50.0f;
+        if (x < -margin) blocks[i].setPosition(DisplayManager::DESIGN_WIDTH + margin, blocks[i].getY());
+        if (x > DisplayManager::DESIGN_WIDTH + margin) blocks[i].setPosition(-margin, blocks[i].getY());
     }
 }
 

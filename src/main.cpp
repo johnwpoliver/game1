@@ -7,6 +7,7 @@
 #include "FPSCounter.h"
 #include "PerformanceMonitor.h"
 #include "Input.h"
+#include "DisplayManager.h"
 
 int main(int argc, char* argv[]) {
     SDL_Log("Starting game...");
@@ -17,7 +18,7 @@ int main(int argc, char* argv[]) {
     }
     SDL_Log("SDL initialized");
 
-    SDL_Window* window = SDL_CreateWindow("My Game", 800, 600, 0);
+    SDL_Window* window = SDL_CreateWindow("My Game", 800, 600, SDL_WINDOW_RESIZABLE);
     if (!window) {
         SDL_Log("SDL_CreateWindow failed: %s", SDL_GetError());
         SDL_Quit();
@@ -33,6 +34,15 @@ int main(int argc, char* argv[]) {
     }
 
     SDL_Log("Renderer created");
+
+    // Initialize display manager
+    DisplayManager::instance().initialize(window);
+
+    // Set up logical presentation for automatic letterboxing
+    SDL_SetRenderLogicalPresentation(renderer,
+        (int)DisplayManager::DESIGN_WIDTH,
+        (int)DisplayManager::DESIGN_HEIGHT,
+        SDL_LOGICAL_PRESENTATION_LETTERBOX);
 
     // Enable VSync for smooth rendering
     SDL_SetRenderVSync(renderer, 1);
@@ -65,6 +75,9 @@ int main(int argc, char* argv[]) {
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_EVENT_QUIT) {
                 running = false;
+            }
+            else if (event.type == SDL_EVENT_WINDOW_RESIZED) {
+                DisplayManager::instance().handleResize(event.window.data1, event.window.data2);
             }
             Input::instance().processEvent(event);
             scenes.handleEvent(event);

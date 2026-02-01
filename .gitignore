@@ -4,6 +4,9 @@ MyGame-Android/build/
 MyGame-Android/app/build/
 MyGame-Android/app/.cxx/
 MyGame-Android/.gradle/
+MyGame-Android/app/jni/SDL
+MyGame-Android/app/jni/SDL_image/
+tests/build/
 
 # IDE
 .vs/

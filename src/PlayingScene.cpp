@@ -1,6 +1,7 @@
 #include "PlayingScene.h"
 #include "GameOverScene.h"
 #include "Input.h"
+#include "DisplayManager.h"
 
 void PlayingScene::onEnter() {
     SDL_Log("PlayingScene: Enter (Level %d)", level);
@@ -51,7 +52,7 @@ void PlayingScene::update(float deltaTime) {
     player.move(dx, dy);
 
     // Keep player within screen bounds
-    player.clampToScreen(800.0f, 600.0f);
+    player.clampToScreen(DisplayManager::DESIGN_WIDTH, DisplayManager::DESIGN_HEIGHT);
 
     // Update player animation
     player.update(deltaTime);

@@ -11,7 +11,13 @@
       "Bash(cmake:*)",
       "Bash(git clone:*)",
       "Bash(python3 -c:*)",
-      "Bash(./MyGame.exe)"
+      "Bash(./MyGame.exe)",
+      "Bash(./gradlew assembleDebug:*)",
+      "Bash(ln:*)",
+      "Bash(vcpkg list:*)",
+      "Bash(C:/vcpkg/vcpkg list:*)",
+      "Bash(C:/vcpkg/vcpkg install gtest:x64-windows)",
+      "Bash(./MyGameTests.exe:*)"
     ]
   }
 }

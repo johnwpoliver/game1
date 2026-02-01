@@ -16,6 +16,7 @@ add_executable(MyGame
     ../src/PerformanceMonitor.cpp
     ../src/Character1.cpp
     ../src/Input.cpp
+    ../src/DisplayManager.cpp
 )
 
 target_link_libraries(MyGame PRIVATE
